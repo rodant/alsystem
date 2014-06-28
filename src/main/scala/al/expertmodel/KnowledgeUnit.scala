@@ -1,6 +1,7 @@
 package al.expertmodel
 
 import scala.collection.immutable.ListSet
+import scala.concurrent.duration._
 
 /**
  * Created by
@@ -11,4 +12,11 @@ import scala.collection.immutable.ListSet
 case class KnowledgeUnit(title: String,
                          description: String,
                          learningMaterials: ListSet[LearningMaterial],
-                         requirements: Set[KnowledgeUnit])
+                         requirements: Set[KnowledgeUnit]) {
+
+  def duration: Duration = learningMaterials.map(_.totalDuration).fold[Duration](0 days)(_ + _)
+
+  def durationWithRequirements: Duration = ???
+
+  def durationWithRequirements(knownUnits: Set[KnowledgeUnit]): Duration = ???
+}
