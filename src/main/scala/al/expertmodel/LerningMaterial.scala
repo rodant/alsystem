@@ -1,6 +1,6 @@
 package al.expertmodel
 
-import scala.concurrent.duration.Duration
+import scala.concurrent.duration._
 
 /**
  * Created by
@@ -8,6 +8,10 @@ import scala.concurrent.duration.Duration
  * Date: 26.03.14
  * Time: 22:59
  */
-case class LearningMaterial(duration: Duration, required: Boolean, content: Content)
+case class LearningMaterial(duration: Duration, content: Content, exercises: Exercise*) {
+  def exercisesDuration: Duration = exercises.foldLeft(0.minutes: Duration)((acc, e) => acc + e.duration)
+  def totalDuration: Duration = duration + exercisesDuration
+}
 
-abstract case class Content()
+abstract class Content
+case object EmptyContent extends Content

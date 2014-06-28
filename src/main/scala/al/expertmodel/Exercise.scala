@@ -1,6 +1,6 @@
 package al.expertmodel
 
-import scala.concurrent.duration.Duration
+import scala.concurrent.duration._
 
 /**
  * Created by
@@ -8,10 +8,15 @@ import scala.concurrent.duration.Duration
  * Date: 26.03.14
  * Time: 22:34
  */
-abstract class Exercise(val duration: Duration, question: String, difficultyDegree: Int, askedKnowledge: KnowledgeUnit*)
 
-case class AutomaticExercise(override val duration: Duration, q: String, diffDegree: Int, knowledge: KnowledgeUnit*) extends Exercise(duration, q, diffDegree) {
-  def withKnowledgeUnits(kus: KnowledgeUnit*) = AutomaticExercise(duration, q, diffDegree, knowledge ++ kus: _*)
-}
+abstract class Exercise(val duration: Duration,
+                        val question: String,
+                        val difficultyDegree: Int)
 
-case class ManualExercise(override val duration: Duration, q: String, diffDegree: Int, knowledge: KnowledgeUnit*) extends Exercise(duration, q, diffDegree)
+case class AutomaticExercise(override val duration: Duration,
+                             override val question: String,
+                             override val difficultyDegree: Int) extends Exercise(duration, question, difficultyDegree)
+
+case class ManualExercise(override val duration: Duration,
+                          override val question: String,
+                          override val difficultyDegree: Int) extends Exercise(duration, question, difficultyDegree)

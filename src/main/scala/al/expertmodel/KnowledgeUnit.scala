@@ -11,5 +11,4 @@ import scala.collection.immutable.ListSet
 case class KnowledgeUnit(title: String,
                          description: String,
                          learningMaterials: ListSet[LearningMaterial],
-                         testSchedules: ListSet[TestSchedule],
                          requirements: Set[KnowledgeUnit])
