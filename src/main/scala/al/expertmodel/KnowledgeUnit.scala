@@ -14,13 +14,15 @@ case class KnowledgeUnit(title: String,
                          learningMaterials: ListSet[LearningMaterial],
                          requirements: Set[KnowledgeUnit]) {
 
-  def duration: Duration = learningMaterials.map(_.totalDuration).fold(0 days)(_ + _)
+  lazy val duration: Duration = KnowledgeUnit.duration(learningMaterials)
 
-  def durationWithOwnRequirements(predicate: (KnowledgeUnit) => Boolean): Duration = {
-    duration + requirements.filter(predicate).map(_.duration).fold(0 days)(_ + _)
+  lazy val durationWithOwnRequirements: Duration = durationWithOwnRequirements(_ => true)
+
+  lazy val durationWithAllRequirements: Duration = durationWithRequirementPredicate(_ => true)
+
+  def durationWithOwnRequirements(p: (KnowledgeUnit) => Boolean): Duration = {
+    duration + KnowledgeUnit.duration(requirements, p)
   }
-
-  def durationWithOwnRequirements: Duration = durationWithOwnRequirements(_ => true)
 
   def durationWithRequirementPredicate(predicate: (KnowledgeUnit) => Boolean): Duration = {
     durationWithOwnRequirements(predicate) +
@@ -28,6 +30,10 @@ case class KnowledgeUnit(title: String,
   }
 
   def durationWithRequirements(requiredUnits: Set[KnowledgeUnit]): Duration = durationWithRequirementPredicate(requiredUnits.contains)
+}
 
-  def durationWithAllRequirements: Duration = durationWithRequirementPredicate(_ => true)
+object KnowledgeUnit {
+  def duration(lms: Set[LearningMaterial]): Duration = lms.map(_.totalDuration).fold(0 days)(_ + _)
+  
+  def duration(reqs: Set[KnowledgeUnit], p: (KnowledgeUnit) => Boolean): Duration = reqs.filter(p).map(_.duration).fold(0 days)(_ + _)
 }
