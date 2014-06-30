@@ -14,9 +14,11 @@ case class KnowledgeUnit(title: String,
                          learningMaterials: ListSet[LearningMaterial],
                          requirements: Set[KnowledgeUnit]) {
 
-  def duration: Duration = learningMaterials.map(_.totalDuration).fold[Duration](0 days)(_ + _)
+  def duration: Duration = learningMaterials.map(_.totalDuration).fold(0 days)(_ + _)
 
-  def durationWithRequirements: Duration = ???
+  def durationWithRequirements: Duration = duration + requirements.map(_.durationWithRequirements).fold(0 days)(_ + _)
 
-  def durationWithRequirements(knownUnits: Set[KnowledgeUnit]): Duration = ???
+  def durationWithRequirements(requiredUnits: Set[KnowledgeUnit]): Duration =
+    duration + requirements.filter(requiredUnits.contains(_)).map(_.durationWithRequirements(requiredUnits)).fold(0 days)(_ + _) +
+      requirements.flatMap(_.requirements).map(_.durationWithRequirements(requiredUnits)).fold(0 days)(_ + _)
 }
