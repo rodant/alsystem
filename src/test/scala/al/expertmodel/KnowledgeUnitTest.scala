@@ -25,11 +25,12 @@ class KnowledgeUnitTest extends FunSuite with MustMatchers {
   }
 
   test("duration with requirements") {
-    testKnowledgeUnitWithRequirements.durationWithRequirements must be(5 days)
+    testKnowledgeUnitWithRequirements.durationWithOwnRequirements must be(3 days)
   }
 
   test("duration with partial requirements") {
     testKnowledgeUnitWithRequirements.durationWithRequirements(bottomUnit) must be (3 days)
+    testKnowledgeUnitWithRequirements.durationWithAllRequirements must be (5 days)
   }
 
   lazy val bottomUnit: Set[KnowledgeUnit] =

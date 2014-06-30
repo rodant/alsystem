@@ -16,9 +16,18 @@ case class KnowledgeUnit(title: String,
 
   def duration: Duration = learningMaterials.map(_.totalDuration).fold(0 days)(_ + _)
 
-  def durationWithRequirements: Duration = duration + requirements.map(_.durationWithRequirements).fold(0 days)(_ + _)
+  def durationWithOwnRequirements(predicate: (KnowledgeUnit) => Boolean): Duration = {
+    duration + requirements.filter(predicate).map(_.duration).fold(0 days)(_ + _)
+  }
 
-  def durationWithRequirements(requiredUnits: Set[KnowledgeUnit]): Duration =
-    duration + requirements.filter(requiredUnits.contains(_)).map(_.durationWithRequirements(requiredUnits)).fold(0 days)(_ + _) +
-      requirements.flatMap(_.requirements).map(_.durationWithRequirements(requiredUnits)).fold(0 days)(_ + _)
+  def durationWithOwnRequirements: Duration = durationWithOwnRequirements(_ => true)
+
+  def durationWithRequirementPredicate(predicate: (KnowledgeUnit) => Boolean): Duration = {
+    durationWithOwnRequirements(predicate) +
+      requirements.flatMap(_.requirements).map(_.durationWithRequirementPredicate(predicate)).fold(0 days)(_ + _)
+  }
+
+  def durationWithRequirements(requiredUnits: Set[KnowledgeUnit]): Duration = durationWithRequirementPredicate(requiredUnits.contains)
+
+  def durationWithAllRequirements: Duration = durationWithRequirementPredicate(_ => true)
 }
