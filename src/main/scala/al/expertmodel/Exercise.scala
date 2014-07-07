@@ -9,9 +9,9 @@ import scala.concurrent.duration._
  * Time: 22:34
  */
 
-abstract class Exercise(val duration: Duration,
-                        val question: String,
-                        val difficultyDegree: Int)
+sealed abstract class Exercise(val duration: Duration,
+                               val question: String,
+                               val difficultyDegree: Int)
 
 case class AutomaticExercise(override val duration: Duration,
                              override val question: String,
