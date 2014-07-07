@@ -9,9 +9,9 @@ import scala.concurrent.duration._
  * Time: 22:59
  */
 case class LearningMaterial(duration: Duration, content: Content, exercises: Exercise*) {
-  def exercisesDuration: Duration = exercises.foldLeft(0.minutes: Duration)((acc, e) => acc + e.duration)
-  def totalDuration: Duration = duration + exercisesDuration
+  lazy val totalDuration: Duration = duration + exercisesDuration(this)
 }
 
 abstract class Content
+
 case object EmptyContent extends Content
