@@ -2,6 +2,7 @@ package al.studentmodel
 
 import al.AlEntity
 import al.datatypes.{EMail, PersonalData}
+import al.expertmodel.KnowledgeUnit
 
 /**
  * Created by
@@ -11,4 +12,6 @@ import al.datatypes.{EMail, PersonalData}
  */
 abstract class Person(override val uuid: String, val personalData: PersonalData) extends AlEntity(uuid)
 
-case class Student(override val uuid: String, email: EMail, override val personalData: PersonalData) extends Person(uuid, personalData)
+case class StudentModel(weekLoadInHours: Int, passedUnits: Set[KnowledgeUnit], targetUnits: Set[KnowledgeUnit])
+
+case class Student(override val uuid: String, email: EMail, override val personalData: PersonalData, sm: StudentModel) extends Person(uuid, personalData)
