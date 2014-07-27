@@ -16,7 +16,7 @@ abstract class User(override val uuid: String, val personalData: PersonalData, r
 
 abstract class Model(override val uuid: String) extends AlEntity(uuid)
 
-case class StudentModel(override val uuid: String, weekWorkLoad: Duration, passedUnits: Set[KnowledgeUnit], targetUnits: Set[KnowledgeUnit],
+case class StudentModel(override val uuid: String, weekWorkLoadInMinutes: Int, passedUnits: Set[KnowledgeUnit], targetUnits: Set[KnowledgeUnit],
                         productivityFactor: Double = 1) extends Model(uuid)
 
 abstract class Role[M <: Model](override val uuid: String, email: EMail, model: M) extends AlEntity(uuid)
