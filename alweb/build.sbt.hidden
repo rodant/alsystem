@@ -1,0 +1,7 @@
+import play.Project._
+
+name := "alweb"
+
+version := "0.1.0"
+
+playScalaSettings
