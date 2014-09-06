@@ -3,9 +3,9 @@
 
 # --- !Ups
 
-create table "CAT" ("name" VARCHAR NOT NULL PRIMARY KEY,"color" VARCHAR NOT NULL);
+create table "USERDATA" ("user_id" VARCHAR NOT NULL PRIMARY KEY,"password" VARCHAR NOT NULL);
 
 # --- !Downs
 
-drop table "CAT";
+drop table "USERDATA";
 
