@@ -3,10 +3,20 @@
 
 @main("Login") {
 
+    <div class="login-panel">
     @helper.form(action = routes.Application.doLogin()) {
-        @helper.inputText(loginForm("userId"))
-        @helper.inputPassword(loginForm("password"))
+        <dl id="userId_field">
+            <label for="userId">Username or email</label>
+            <input id="userId" name="userId" type="text"/>
+        </dl>
+        <dl id="password_field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password"/>
+        </dl>
+        @*helper.inputText(loginForm("userId"))
+        @helper.inputPassword(loginForm("password"))*@
         <input type="submit" value="Sign in"/>
     }
+    </div>
 }
 
