@@ -19,20 +19,14 @@
                             <header>
                                 <h2>Sign In</h2>
                             </header>
-                            <p>
-                                <label for="textfield">User name:</label>
-                                <input type="text" name="textfield" id="textfield">
-                            </p>
-                            <p>&nbsp;</p>
-                            <p>
-                                <label for="textfield2">Password:</label>
-                                <input type="text" name="textfield2" id="textfield2">
-                            </p>
-                            <p>&nbsp; </p>
-                            <p>
-                                <input type="button" name="button" id="button" value="Sign In">
-                                <br>
-                            </p>
+                            @helper.form(action = routes.Application.doLogin()) {
+                                @helper.inputText(loginForm("userId"), '_label -> "Username or e-mail", '_showConstraints -> false)
+                                @helper.inputPassword(loginForm("password"), '_label -> "Password", '_showConstraints -> false)
+                                <p>
+                                    <input type="submit" name="button" id="button" value="Sign In">
+                                    <br>
+                                </p>
+                            }
                         </section>
                     </div>
                     <div class="4u">
@@ -45,26 +39,10 @@
                         </section>
                     </div>
                 </div>
-
             </section>
 
         </div>
     </div>
 
-    <div class="login-panel">
-    @helper.form(action = routes.Application.doLogin()) {
-        <dl id="userId_field">
-            <label for="userId">Username or email</label>
-            <input id="userId" name="userId" type="text"/>
-        </dl>
-        <dl id="password_field">
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password"/>
-        </dl>
-        @*helper.inputText(loginForm("userId"))
-        @helper.inputPassword(loginForm("password"))*@
-        <input type="submit" value="Sign in"/>
-    }
-    </div>
 }
 
