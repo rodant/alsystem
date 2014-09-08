@@ -18,7 +18,7 @@ object Application extends Controller {
     request.session.get("user-id").map { ui =>
       Ok(views.html.home(ui))
     }.getOrElse {
-      Unauthorized("Oops, you are not logged in!")
+      Redirect("/")
     }
   }
 
@@ -35,7 +35,7 @@ object Application extends Controller {
     )
   }
 
-  def logOff = Action {
+  def logout = Action {
     Redirect("/").withNewSession
   }
 
