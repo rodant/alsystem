@@ -82,6 +82,12 @@
 			text-decoration: none;
 		}
 
+        .beta {
+            width: 50px;
+            height: 16px;
+            color: #FF3333;
+        }
+
 	a
 	{
 		color: #d52349;
