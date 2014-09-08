@@ -108,7 +108,7 @@
 		
 	p, ul, ol, dl, table
 	{
-		margin-bottom: 2em;
+		margin-bottom: 1em!important;
 	}
 
 	/* Form */
@@ -140,6 +140,7 @@
 				border: solid 1px #dddddd;
 				background: #fff;
 				width: 100%;
+                height: 40px;
 			}
 
 			form input[type=text]:focus,
@@ -824,6 +825,10 @@
 /*********************************************************************************/
 
     #intro label {
+        text-align: left;
+    }
+
+    #intro p {
         text-align: left;
     }
 

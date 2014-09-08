@@ -1,5 +1,6 @@
 package models
 
+import al.datatypes.EMail
 import play.api.db.slick.Config.driver.simple._
 
 import scala.slick.lifted.ProvenShape
@@ -12,11 +13,15 @@ import scala.slick.lifted.ProvenShape
  */
 case class LoginData(userId: String, password: String)
 
-class LoginDataTable(tag: Tag) extends Table[LoginData](tag, "LOGINDATA") {
+case class SignUpData(firstName: String, email: String, password: String)
 
-  def userId = column[String]("user_id", O.PrimaryKey)
+class SignUpDataTable(tag: Tag) extends Table[SignUpData](tag, "SIGNUPDATA") {
+
+  def firstName = column[String]("first_name", O.PrimaryKey)
+
+  def email = column[String]("email", O.NotNull)
 
   def password = column[String]("password", O.NotNull)
 
-  def * : ProvenShape[LoginData] = (userId, password) <>  (LoginData.tupled, LoginData.unapply)
+  def * : ProvenShape[SignUpData] = (firstName, email, password) <>  (SignUpData.tupled, SignUpData.unapply)
 }

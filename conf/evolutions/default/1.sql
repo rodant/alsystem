@@ -3,9 +3,9 @@
 
 # --- !Ups
 
-create table "LOGINDATA" ("user_id" VARCHAR NOT NULL PRIMARY KEY,"password" VARCHAR NOT NULL);
+create table "SIGNUPDATA" ("first_name" VARCHAR NOT NULL PRIMARY KEY,"email" VARCHAR NOT NULL,"password" VARCHAR NOT NULL);
 
 # --- !Downs
 
-drop table "LOGINDATA";
+drop table "SIGNUPDATA";
 
