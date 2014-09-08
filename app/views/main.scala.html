@@ -8,11 +8,29 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="robots" content="index, nofollow">
+        <meta name="viewport" content="initial-scale=1">
+        <meta name="description" content="">
+        <meta name="keywords" content="e-learning,adaptive learning">
 
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+            <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+
+        <noscript>
+            <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("/public", "images/favicon.png")">
+            <link rel="stylesheet" media="screen" href="@routes.Assets.at("/public", "stylesheets/main.css")">
+            <link rel="stylesheet" href="@routes.Assets.at("/public/css", "skel.css")" />
+            <link rel="stylesheet" href="@routes.Assets.at("/public/css", "style.css")" />
+            <link rel="stylesheet" href="@routes.Assets.at("/public/css", "style-desktop.css")" />
+        </noscript>
+
+        <script src="@routes.Assets.at("/public", "javascripts/jquery.min.js")"></script>
+        <script src="@routes.Assets.at("/public", "javascripts/jquery.dropotron.min.js")"></script>
+        <script src="@routes.Assets.at("/public", "javascripts/skel.min.js")"></script>
+        <script src="@routes.Assets.at("/public", "javascripts/skel-layers.min.js")"></script>
+        <script src="@routes.Assets.at("/public", "javascripts/init.js")"></script>
+
+            <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
     </head>
-    <body>
+    <body class="homepage">
         @content
     </body>
 </html>

@@ -3,6 +3,54 @@
 
 @main("Login") {
 
+    <!-- Header -->
+    <div id="header-wrapper">
+        <div id="header">
+
+                <!-- Logo -->
+            <h1><a href="/home">Sparkmind</a></h1>
+
+                <!-- Sign in/up -->
+            <section id="intro" class="container">
+                <div class="row">
+                    <div class="4u">
+                        <section class="first">
+                            <i class=""></i>
+                            <header>
+                                <h2>Sign In</h2>
+                            </header>
+                            <p>
+                                <label for="textfield">User name:</label>
+                                <input type="text" name="textfield" id="textfield">
+                            </p>
+                            <p>&nbsp;</p>
+                            <p>
+                                <label for="textfield2">Password:</label>
+                                <input type="text" name="textfield2" id="textfield2">
+                            </p>
+                            <p>&nbsp; </p>
+                            <p>
+                                <input type="button" name="button" id="button" value="Sign In">
+                                <br>
+                            </p>
+                        </section>
+                    </div>
+                    <div class="4u">
+                        <section class="middle">
+                            <i class=" "></i>
+                            <header>
+                                <h2>Sign Up</h2>
+                            </header>
+                            <p>Nisl amet dolor sit ipsum veroeros sed blandit consequat veroeros et magna tempus.</p>
+                        </section>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+    </div>
+
     <div class="login-panel">
     @helper.form(action = routes.Application.doLogin()) {
         <dl id="userId_field">
