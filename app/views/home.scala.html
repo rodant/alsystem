@@ -1,6 +1,43 @@
 @(userId: String)
 
-@main("Home") {
+    @main("Home") {
 
-    <h1>Home</h1>
-}
+        <div id="header-wrapper">
+            <div id="header">
+                    <!-- Logo -->
+                <h1><a href="/home">Sparkmind</a></h1>
+
+                <nav id="nav">
+                    <ul>
+                        <li class="current" style="white-space: nowrap;"><a href="/home">Home</a></li>
+                        <li class="opener" style="-webkit-user-select: none; cursor: pointer; white-space: nowrap;">
+                            <a href="">Dropdown</a>
+
+                            <ul class="" style="-webkit-user-select: none; display: none; position: absolute;">
+                                <li style="white-space: nowrap;"><a href="#" style="display: block;">Lorem ipsum dolor</a></li>
+                                <li style="white-space: nowrap;"><a href="#" style="display: block;">Magna phasellus</a></li>
+                                <li style="white-space: nowrap;"><a href="#" style="display: block;">Etiam dolore nisl</a></li>
+                                <li class="opener" style="-webkit-user-select: none; cursor: pointer; white-space: nowrap;">
+                                    <a href="" style="display: block;">Phasellus consequat</a>
+                                    <ul class="dropotron" style="-webkit-user-select: none; display: none; position: absolute;">
+                                        <li style="white-space: nowrap;"><a href="#" style="display: block;">Magna phasellus</a></li>
+                                        <li style="white-space: nowrap;"><a href="#" style="display: block;">Etiam dolore nisl</a></li>
+                                        <li style="white-space: nowrap;"><a href="#" style="display: block;">Veroeros feugiat</a></li>
+                                        <li style="white-space: nowrap;"><a href="#" style="display: block;">Nisl sed aliquam</a></li>
+                                        <li style="white-space: nowrap;"><a href="#" style="display: block;">Dolore adipiscing</a></li>
+                                    </ul>
+                                </li>
+                                <li style="white-space: nowrap;"><a href="#" style="display: block;">Veroeros feugiat</a></li>
+                            </ul></li>
+                    </ul>
+                </nav>
+
+                <section id="banner">
+                    <header>
+                        <h2>Welcome to Sparkmind (@userId)</h2>
+                        <p>An adaptive e-learning platform</p>
+                    </header>
+                </section>
+            </div>
+        </div>
+    }

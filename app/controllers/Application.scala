@@ -14,8 +14,12 @@ object Application extends Controller {
     )(LoginData.apply)(LoginData.unapply)
   )
 
-  def home = Action {
-    Ok(views.html.home("Your new application is ready."))
+  def home = Action { implicit request =>
+    request.session.get("user-id").map { ui =>
+      Ok(views.html.home(ui))
+    }.getOrElse {
+      Unauthorized("Oops, you are not logged in!")
+    }
   }
 
   def login = Action {
@@ -25,8 +29,14 @@ object Application extends Controller {
   def doLogin = Action { implicit request =>
     loginForm.bindFromRequest().fold(
       formWithErrors => BadRequest(views.html.login(formWithErrors)),
-      loginData => Ok(views.html.home(loginData.userId))
+      loginData => {
+        Redirect("/home").withSession("user-id" -> loginData.userId)
+      }
     )
+  }
+
+  def logOff = Action {
+    Redirect("/").withNewSession
   }
 
 }
