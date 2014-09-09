@@ -1,9 +1,14 @@
 package controllers
 
-import models.{LoginData, SignUpData}
+import models.{LoginData, SignUpData, SignUpDataTable}
+import play.api.Logger
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.db.slick._
 import play.api.mvc._
+
+import scala.slick.driver.H2Driver.simple._
+import scala.slick.lifted.TableQuery
 
 object Application extends Controller {
 
@@ -22,6 +27,9 @@ object Application extends Controller {
     )(SignUpData.apply)(SignUpData.unapply)
   )
 
+  val signUpData = TableQuery[SignUpDataTable]
+  val logger = Logger.logger
+
   def home = Action { implicit request =>
     request.session.get("user-id").map { ui =>
       Ok(views.html.home(ui))
@@ -34,20 +42,31 @@ object Application extends Controller {
     Ok(views.html.login(loginForm, signUpForm))
   }
 
-  def doLogin() = Action { implicit request =>
+  def doLogin() = DBAction { implicit rs =>
     loginForm.bindFromRequest().fold(
       formWithErrors => BadRequest(views.html.login(formWithErrors, signUpForm)),
-      loginData => {
-        Redirect("/home").withSession("user-id" -> loginData.userId)
+      ld => {
+        val query = signUpData.filter(e => (e.firstName === ld.userId) || (e.email === ld.userId))
+        query.firstOption match {
+          case Some(SignUpData(fn, _, ld.password)) => Redirect("/home").withSession("user-id" -> fn)
+          case _ => Unauthorized(views.html.login(loginForm, signUpForm))
+        }
       }
     )
   }
 
-  def doSignUp() = Action { implicit request =>
+  def doSignUp() = DBAction { implicit rs =>
     signUpForm.bindFromRequest().fold(
       formWithErrors => BadRequest(views.html.login(loginForm, formWithErrors)),
-      signUpData => {
-        Redirect("/home").withSession("user-id" -> signUpData.firstName)
+      sud => {
+        val query = signUpData.filter(e => (e.firstName === sud.firstName) || (e.email === sud.email))
+        query.firstOption match {
+          case Some(_) => Conflict(views.html.login(loginForm, signUpForm))
+          case None => {
+            signUpData += sud
+            Redirect("/home", CREATED).withSession("user-id" -> sud.firstName)
+          }
+        }
       }
     )
   }

@@ -1,6 +1,5 @@
 package models
 
-import al.datatypes.EMail
 import play.api.db.slick.Config.driver.simple._
 
 import scala.slick.lifted.ProvenShape
@@ -23,5 +22,5 @@ class SignUpDataTable(tag: Tag) extends Table[SignUpData](tag, "SIGNUPDATA") {
 
   def password = column[String]("password", O.NotNull)
 
-  def * : ProvenShape[SignUpData] = (firstName, email, password) <>  (SignUpData.tupled, SignUpData.unapply)
+  def * : ProvenShape[SignUpData] = (firstName, email, password) <>(SignUpData.tupled, SignUpData.unapply)
 }
