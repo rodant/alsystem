@@ -1,15 +1,16 @@
-@(userId: String)
+@(username: String)
 
     @main("Home") {
 
         <div id="header-wrapper">
             <div id="header">
                     <!-- Logo -->
-                <h1><a href="/home">Sparkmind</a><span class="beta">Beta</span></h1>
+                <h1><a href="/home">Sparkmind</a><span class="beta">Beta</span></h1><span class="user-label">@username</span>
 
                 <nav id="nav">
                     <ul>
                         <li class="current" style="white-space: nowrap;"><a href="/home">Home</a></li>
+                        <li class="opener" style="-webkit-user-select: none; cursor: pointer; white-space: nowrap;"><a href="/courses">Courses</a></li>
                         <li class="opener" style="-webkit-user-select: none; cursor: pointer; white-space: nowrap;">
                             <a href="">Dropdown</a>
 
@@ -29,13 +30,13 @@
                                 </li>
                                 <li style="white-space: nowrap;"><a href="#" style="display: block;">Veroeros feugiat</a></li>
                             </ul></li>
-                        <li class="current" style="white-space: nowrap;"><a href="/logout">Logout</a></li>
+                        <li class="opener" style="-webkit-user-select: none; cursor: pointer; white-space: nowrap;"><a href="/logout">Logout</a></li>
                     </ul>
                 </nav>
 
                 <section id="banner">
                     <header>
-                        <h2>Welcome to Sparkmind (@userId)</h2>
+                        <h2>Welcome to Sparkmind</h2>
                         <p>An adaptive e-learning platform</p>
                     </header>
                 </section>

@@ -38,6 +38,14 @@ object Application extends Controller {
     }
   }
 
+  def courses = Action { implicit request =>
+    request.session.get("user-id").map { ui =>
+      Ok(views.html.courses(ui))
+    }.getOrElse {
+      Redirect("/")
+    }
+  }
+
   def login = Action {
     Ok(views.html.login(loginForm, signUpForm))
   }
@@ -64,7 +72,7 @@ object Application extends Controller {
           case Some(_) => Conflict(views.html.login(loginForm, signUpForm))
           case None => {
             signUpData += sud
-            Redirect("/home", CREATED).withSession("user-id" -> sud.firstName)
+            Redirect("/home").withSession("user-id" -> sud.firstName)
           }
         }
       }

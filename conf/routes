@@ -5,8 +5,9 @@
 # Home page
 GET         /                    controllers.Application.login
 GET         /home                controllers.Application.home
+GET         /courses             controllers.Application.courses
 POST        /doLogin             controllers.Application.doLogin
-POST        /doSignUp             controllers.Application.doSignUp
+POST        /doSignUp            controllers.Application.doSignUp
 GET         /logout              controllers.Application.logout
 
 # Map static resources from the /public folder to the /assets URL path

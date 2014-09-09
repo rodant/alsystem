@@ -1,3 +1,9 @@
 input[type="submit"] {
     float: left;
 }
+
+.user-label {
+    font-weight: normal;
+    position: absolute;
+    right: 50px;
+}
