@@ -1,14 +1,17 @@
 package controllers
 
-import models.{LoginData, SignUpData, SignUpDataTable}
+import models.{Course, LoginData, SignUpData, SignUpDataTable}
 import play.api.Logger
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.db.slick._
 import play.api.mvc._
 
+import scala.collection.immutable
+import scala.concurrent.Future
 import scala.slick.driver.H2Driver.simple._
 import scala.slick.lifted.TableQuery
+import scala.xml.{Node, NodeSeq}
 
 object Application extends Controller {
 
@@ -38,11 +41,28 @@ object Application extends Controller {
     }
   }
 
-  def courses = Action { implicit request =>
-    request.session.get("user-id").map { ui =>
-      Ok(views.html.courses(ui))
+  def courses = Action async { implicit request =>
+
+    import play.api.libs.concurrent.Execution.Implicits.defaultContext
+    import Utils.SCORMWSRequestHolder
+
+    def mapCoursesXML(coursesXml: NodeSeq): Seq[Course] = {
+      (coursesXml \\ "course").map(node =>
+        Course(
+          (node \ "@id").toString(),
+          (node \ "@title").toString(),
+          (node \ "@versions").toString().toInt,
+          (node \ "@registrations").toString().toInt,
+          (node \ "tags" \ "tag").toSet[Node].map(_.text)))
+    }
+
+    request.session.get("user-id").map { username =>
+      SCORMWSRequestHolder()
+        .withQueryString("method" -> "rustici.course.getCourseList")
+        .withSecureSCORMApiParams.get()
+        .map(res => Ok(views.html.courses(username, mapCoursesXML(res.xml))))
     }.getOrElse {
-      Redirect("/")
+      Future.successful(Redirect("/"))
     }
   }
 

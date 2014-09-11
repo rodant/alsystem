@@ -17,38 +17,6 @@ import scala.util.{Sorting, Try}
 
 object Utils {
 
-  implicit class SCORMWSRequestHolder(req: WSRequestHolder) {
-    // TODO: pack this stuff in a config file
-    //val APP_ID = "B9EPZP4CAQ" default APP-ID
-    val APP_ID = "D1NQNHTHZ4"
-    val SCORM_API_ORIGIN = "sparkmind.dashboard.0.1-beta"
-    val SECRET_KEY = "b4f0oHzAUHK0xnlLDbVr3iue0a9NWTsDcAfDAZ8k"
-
-    def withSecureSCORMApiParams: WSRequestHolder = {
-      val augmentedReq = req.withQueryString(
-      "appid" -> APP_ID,
-      "origin" -> SCORM_API_ORIGIN,
-      "ts" -> generateSCORMApiTimestamp())
-      augmentedReq.withQueryString("sig" -> generateSignature(augmentedReq.queryString))
-    }
-
-    private def generateSignature(parameters: Map[String, Seq[String]]): String = {
-      val s = SECRET_KEY + trimQueryParamsForSig(parameters)
-      val md = MessageDigest.getInstance("MD5")
-      val digest: Array[Byte] = md.digest(s.getBytes)
-
-      (BigInt(digest) &~ (BigInt(-1) << (8 * digest.size))).toString(16)
-    }
-
-    private def trimQueryParamsForSig(parameters: Map[String, Seq[String]]): String = {
-      val ka = parameters.keys.toArray
-      Sorting.quickSort(ka)(Ordering.by(_.toLowerCase))
-      ka.map(k => k + parameters(k).sorted.mkString).mkString
-    }
-
-    private def generateSCORMApiTimestamp(): String = DateTimeFormat.forPattern("yyyyMMddHHmmss").print(DateTime.now(DateTimeZone.UTC))
-  }
-
   def secureWsUrl(endPointUrl: String, queryString: (String, String)*): String = {
     import play.api.Play._
     import play.api.libs.ws._
@@ -74,5 +42,47 @@ object Utils {
     val queryString: Map[String, Seq[String]] = req.queryString
     req.url + queryString.keys.map(k => queryString(k).foldLeft("")(_ + k + "=" + _ + "&"))
       .mkString("?", "&", "").replace("&&", "&").dropRight(1)
+  }
+
+  object SCORMWSRequestHolder {
+
+    import play.api.Play.current
+
+    // TODO: pack this stuff in a config file
+    private val SCORM_WS_END_POINT = "https://cloud.scorm.com/EngineWebServices/api"
+
+    def apply(): WSRequestHolder = WS.url(SCORM_WS_END_POINT)
+  }
+
+  implicit class SCORMWSRequestHolder(req: WSRequestHolder) {
+    // TODO: pack this stuff in a config file
+    //val APP_ID = "B9EPZP4CAQ" default APP-ID
+    private val APP_ID = "D1NQNHTHZ4"
+    private val SCORM_API_ORIGIN = "sparkmind.dashboard.0.1-beta"
+    private val SECRET_KEY = "b4f0oHzAUHK0xnlLDbVr3iue0a9NWTsDcAfDAZ8k"
+
+    def withSecureSCORMApiParams: WSRequestHolder = {
+      val augmentedReq = req.withQueryString(
+      "appid" -> APP_ID,
+      "origin" -> SCORM_API_ORIGIN,
+      "ts" -> generateSCORMApiTimestamp())
+      augmentedReq.withQueryString("sig" -> generateSignature(augmentedReq.queryString))
+    }
+
+    private def generateSignature(parameters: Map[String, Seq[String]]): String = {
+      val s = SECRET_KEY + trimQueryParamsForSig(parameters)
+      val md = MessageDigest.getInstance("MD5")
+      val digest: Array[Byte] = md.digest(s.getBytes)
+
+      (BigInt(digest) &~ (BigInt(-1) << (8 * digest.size))).toString(16)
+    }
+
+    private def trimQueryParamsForSig(parameters: Map[String, Seq[String]]): String = {
+      val ka = parameters.keys.toArray
+      Sorting.quickSort(ka)(Ordering.by(_.toLowerCase))
+      ka.map(k => k + parameters(k).sorted.mkString).mkString
+    }
+
+    private def generateSCORMApiTimestamp(): String = DateTimeFormat.forPattern("yyyyMMddHHmmss").print(DateTime.now(DateTimeZone.UTC))
   }
 }

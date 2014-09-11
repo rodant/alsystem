@@ -7,3 +7,15 @@ input[type="submit"] {
     position: absolute;
     right: 50px;
 }
+
+.beta {
+    width: 50px;
+    font-size: 16px;
+    color: #FF3333;
+}
+
+.tag {
+    display: inline;
+    margin: 5px;
+    font-weight: bold;
+}
