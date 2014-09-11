@@ -8,7 +8,8 @@ scalacOptions ++= Seq("-deprecation", "-feature", "-language:postfixOps")
 
 libraryDependencies ++= Seq(
   "org.webjars" %% "webjars-play" % "2.3.0",
-  "com.typesafe.play" %% "play-slick" % "0.8.0"
+  "com.typesafe.play" %% "play-slick" % "0.8.0",
+  "com.typesafe.play" %% "play-ws" % "2.3.1"
 )
 
 fork in Test := false
