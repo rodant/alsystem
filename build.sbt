@@ -17,7 +17,9 @@ lazy val alweb = project
   .settings(commonSettings: _*)
   .settings(commonPlaySettings: _*)
   .settings(
-    libraryDependencies ++= Seq()
+    libraryDependencies ++= Seq(
+      "org.webjars" % "angularjs" % "1.2.18" exclude("org.webjars", "jquery")
+    )
   ).enablePlugins(PlayScala)
 
 lazy val alsystem = (project in file("."))

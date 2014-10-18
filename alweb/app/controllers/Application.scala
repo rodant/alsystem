@@ -7,7 +7,6 @@ import play.api.data.Forms._
 import play.api.db.slick._
 import play.api.mvc._
 
-import scala.collection.immutable
 import scala.concurrent.Future
 import scala.slick.driver.H2Driver.simple._
 import scala.slick.lifted.TableQuery
@@ -43,8 +42,8 @@ object Application extends Controller {
 
   def courses = Action async { implicit request =>
 
+    import controllers.Utils.SCORMWSRequestHolder
     import play.api.libs.concurrent.Execution.Implicits.defaultContext
-    import Utils.SCORMWSRequestHolder
 
     def mapCoursesXML(coursesXml: NodeSeq): Seq[Course] = {
       (coursesXml \\ "course").map(node =>
