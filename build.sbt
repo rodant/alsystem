@@ -36,7 +36,7 @@ lazy val commonPlaySettings: Seq[Setting[_]] = Seq(
 
 lazy val commonSettings: Seq[Setting[_]] = Seq(
   name <<= name("alsystem-" + _),
-  version := "0.1-SNAPSHOT",
+  version := "0.2-SNAPSHOT",
   scalaVersion := "2.11.1",
   scalacOptions ++= Seq("-deprecation", "-feature", "-language:postfixOps"),
   libraryDependencies ++= Seq(
