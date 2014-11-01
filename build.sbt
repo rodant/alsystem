@@ -18,7 +18,7 @@ lazy val alweb = project
   .settings(commonPlaySettings: _*)
   .settings(
     libraryDependencies ++= Seq(
-      "org.webjars" % "angularjs" % "1.2.18" exclude("org.webjars", "jquery")
+      "org.webjars" % "angularjs" % "1.3.0" exclude("org.webjars", "jquery")
     )
   ).enablePlugins(PlayScala)
 

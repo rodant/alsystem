@@ -74,3 +74,20 @@
 	});
 
 })(jQuery);
+
+/* Angular app */
+
+(function() {
+    var app = angular.module('sparkmind', ['header']);
+
+    var header = angular.module('header', []);
+    const inactiveStyle = "-webkit-user-select: none; cursor: pointer; ";
+    var headerItems = [
+        {"label": "Home", "class": "current", "style": "", "link": "/home"},
+        {"label": "Courses", "class": "opener", "style": inactiveStyle, "link": "/courses"},
+        {"label": "Logout", "class": "opener", "style": inactiveStyle, "link": "/logout"}
+    ];
+    header.controller('HeaderController', function () {
+        this.items = headerItems;
+    });
+})();
