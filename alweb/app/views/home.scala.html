@@ -2,16 +2,16 @@
 
     @main("Home") {
 
-        <div id="header-wrapper">
-            <div id="header" ng-app="header" ng-controller="HeaderController as header">
-                    <!-- Logo -->
-                <h1><a href="/home">Sparkmind</a><span class="beta">Beta</span></h1><span class="user-label">@username</span>
+    <div id="header-wrapper">
+        <div id="header" ng-app="header" ng-controller="HeaderController as header">
+                <!-- Logo -->
+            <h1><a href="/home">Sparkmind</a><span class="beta">Beta</span></h1><span class="user-label">@username</span>
 
-                <nav id="nav">
-                    <ul>
-                        <li ng-repeat="item in header.items" class="{{item.class}}" style="{{item.style + 'white-space: nowrap;'}}">
-                            <a href="{{item.link}}">{{item.label}}</a>
-                        </li>
+            <nav id="nav">
+                <ul>
+                    <li ng-repeat="item in header.items" class="{{item.class}}" style="{ { item.style + 'white-space: nowrap;' } }">
+                        <a href="{{item.link}}">{{item.label}}</a>
+                    </li>
                         <!-- sub menus
                         <li class="opener" style="-webkit-user-select: none; cursor: pointer; white-space: nowrap;">
                             <a href="">Dropdown</a>
@@ -33,14 +33,11 @@
                                 <li style="white-space: nowrap;"><a href="#" style="display: block;">Veroeros feugiat</a></li>
                             </ul></li>
                             -->
-                    </ul>
-                </nav>
-            </div>
-            <section id="banner">
-                <header>
-                    <h2>Welcome to Sparkmind</h2>
-                    <p>An adaptive e-learning platform</p>
-                </header>
-            </section>
+                </ul>
+            </nav>
         </div>
+
+        <div ng-view></div>
+
+    </div>
     }

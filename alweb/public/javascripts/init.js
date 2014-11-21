@@ -78,12 +78,27 @@
 /* Angular app */
 
 (function() {
-    var app = angular.module('sparkmind', ['header']);
+	"use strict";
+
+    var app = angular.module('sparkmind', ['ngRoute', 'header']);
+	app.controller('MainController', function() {
+	});
+
+	app.controller('HomeController', function() {
+	});
+
+	app.config(function($routeProvider, $locationProvider) {
+		$routeProvider
+			.when('/house', {
+				templateUrl: 'partials/home-view.html',
+				controller: 'HomeController'
+			});
+	});
 
     var header = angular.module('header', []);
-    const inactiveStyle = "-webkit-user-select: none; cursor: pointer; ";
+    var inactiveStyle = "-webkit-user-select: none; cursor: pointer; ";
     var headerItems = [
-        {"label": "Home", "class": "current", "style": "", "link": "/home"},
+        {"label": "Home", "class": "current", "style": "", "link": "#/house"},
         {"label": "Courses", "class": "opener", "style": inactiveStyle, "link": "/courses"},
         {"label": "Logout", "class": "opener", "style": inactiveStyle, "link": "/logout"}
     ];
