@@ -80,22 +80,11 @@
 (function() {
 	"use strict";
 
-    var app = angular.module('sparkmind', ['ngRoute', 'header']);
+    var app = angular.module('sparkmind', ['header', 'home']);
 	app.controller('MainController', function() {
 	});
 
-	app.controller('HomeController', function() {
-	});
-
-	app.config(function($routeProvider, $locationProvider) {
-		$routeProvider
-			.when('/house', {
-				templateUrl: 'partials/home-view.html',
-				controller: 'HomeController'
-			});
-	});
-
-    var header = angular.module('header', []);
+	var header = angular.module('header', []);
     var inactiveStyle = "-webkit-user-select: none; cursor: pointer; ";
     var headerItems = [
         {"label": "Home", "class": "current", "style": "", "link": "#/house"},
@@ -105,4 +94,17 @@
     header.controller('HeaderController', function () {
         this.items = headerItems;
     });
+
+	var homeModule = angular.module('home', ['ngRoute']);
+	homeModule.controller('HomeController', function() {
+	});
+
+	homeModule.config(function($routeProvider) {
+		$routeProvider
+			.when('/house', {
+				templateUrl: 'partials/home-view.html',
+				controller: 'HomeController'
+			});
+	});
+
 })();
