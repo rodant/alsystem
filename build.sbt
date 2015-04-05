@@ -4,6 +4,8 @@ name := "alsystem"
 
 fork in Test := false
 
+fork in run := true
+
 lazy val logic = project
   .settings(commonSettings: _*)
   .settings(
@@ -18,7 +20,7 @@ lazy val alweb = project
   .settings(commonPlaySettings: _*)
   .settings(
     libraryDependencies ++= Seq(
-      "org.webjars" % "angularjs" % "1.3.0" exclude("org.webjars", "jquery")
+      "org.webjars" % "angularjs" % "1.3.0"
     )
   ).enablePlugins(PlayScala)
 
