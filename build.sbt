@@ -12,21 +12,17 @@ lazy val logic = project
     libraryDependencies ++= Seq()
   )
 
-lazy val alweb = project
+lazy val alsystem = (project in file("."))
   .dependsOn(logic)
   .aggregate(logic)
-  //settings(playScalaSettings: _*)
   .settings(commonSettings: _*)
   .settings(commonPlaySettings: _*)
   .settings(
     libraryDependencies ++= Seq(
-      "org.webjars" % "angularjs" % "1.3.0"
+      "org.webjars" % "angularjs" % "1.2.18" exclude("org.webjars", "jquery"),
+      "org.webjars" % "requirejs" % "2.1.11-1"
     )
   ).enablePlugins(PlayScala)
-
-lazy val alsystem = (project in file("."))
-  .settings(commonSettings: _*)
-  .enablePlugins(PlayScala).dependsOn(alweb, logic)
 
 lazy val commonPlaySettings: Seq[Setting[_]] = Seq(
   libraryDependencies ++= Seq(
