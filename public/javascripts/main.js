@@ -9,7 +9,12 @@
 requirejs.config({
     paths: {
         'angular': ['../lib/angularjs/angular'],
-        'angular-route': ['../lib/angularjs/angular-route']
+        'angular-route': ['../lib/angularjs/angular-route'],
+        'jquery': ['../lib/jquery/jquery'],
+        'dropotron': ['jquery.dropotron.min'],
+        'skel': ['skel.min'],
+        'skel-layers': ['skel-layers.min'],
+        'init': ['init']
     },
     shim: {
         'angular': {
@@ -18,13 +23,32 @@ requirejs.config({
         'angular-route': {
             deps: ['angular'],
             exports: 'angular'
+        },
+        'jquery': {
+            exports: 'jquery'
+        },
+        'dropotron': {
+            deps: ['jquery'],
+            exports: 'dropotron'
+        },
+        'skel': {
+            deps: ['dropotron'],
+            exports: 'skel'
+        },
+        'skel-layers': {
+            deps: ['skel'],
+            exports: 'skel-layers'
+        },
+        'init': {
+            deps: ['skel'],
+            exports: 'init'
         }
     }
 });
 
 /* Angular app */
 
-require(['angular', 'angular-route'],
+require(['angular', 'init', 'angular-route'],
     function (angular) {
         var header = angular.module('header', []);
         var inactiveStyle = "-webkit-user-select: none; cursor: pointer; ";
@@ -37,11 +61,11 @@ require(['angular', 'angular-route'],
             this.items = headerItems;
         });
 
-        var homeModule = angular.module('home', ['ngRoute']);
-        homeModule.controller('HomeController', function () {
+        var home = angular.module('home', ['ngRoute']);
+        home.controller('HomeController', function () {
         });
 
-        homeModule.config(['$routeProvider', function ($routeProvider) {
+        home.config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/house', {
                     templateUrl: 'partials/home-view.html',
@@ -49,9 +73,9 @@ require(['angular', 'angular-route'],
                 });
         }]);
 
-        var app = angular.module('sparkmind', ['header', 'home']);
-        app.controller('MainController', function () {});
+        var sparkmind = angular.module('sparkmind', ['header', 'home']);
+        sparkmind.controller('MainController', function () {});
 
-        angular.bootstrap(document.body, ['sparkmind'])
+        angular.bootstrap(document, ['sparkmind'])
     }
 );
